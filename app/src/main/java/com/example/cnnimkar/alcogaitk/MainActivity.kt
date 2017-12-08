@@ -2,9 +2,6 @@ package com.example.cnnimkar.alcogaitk
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ImageView
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -15,8 +12,6 @@ class MainActivity : AppCompatActivity() {
     val WASTED = 0.13..0.25
 
 
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -25,31 +20,31 @@ class MainActivity : AppCompatActivity() {
 
         bacInputButton.setOnClickListener({
             var alcoholInput = bacInputEditText
-                                .text
-                                .toString()
-                                .toDouble()
+                    .text
+                    .toString()
+                    .toDouble()
 
 
             when {
-                alcoholInput in SOBER ->  GlideApp
+                alcoholInput in SOBER -> GlideApp
                         .with(this)
                         .load(R.drawable.sober)
                         .centerCrop()
                         .into(avatarImage)
 
-                alcoholInput in TIPSY ->  GlideApp
+                alcoholInput in TIPSY -> GlideApp
                         .with(this)
                         .load(R.drawable.tipsy)
                         .centerCrop()
                         .into(avatarImage)
 
-                alcoholInput in DRUNK ->  GlideApp
+                alcoholInput in DRUNK -> GlideApp
                         .with(this)
                         .load(R.drawable.drunk)
                         .centerCrop()
                         .into(avatarImage)
 
-                alcoholInput in WASTED ->  GlideApp
+                alcoholInput in WASTED -> GlideApp
                         .with(this)
                         .load(R.drawable.wasted)
                         .centerCrop()
@@ -62,13 +57,6 @@ class MainActivity : AppCompatActivity() {
             }
 
         })
-
-
-
-
-
-
-
 
 
     }
