@@ -71,7 +71,6 @@ class BreathalyzerAvatar : AppCompatActivity() {
     fun connectNearestClicked() {
         if (mAPI != null) {
             setStatus(R.string.TEXT_CONNECTING)
-            // Here, thisActivity is the current activity
             if (ContextCompat.checkSelfPermission(this@BreathalyzerAvatar,
                     Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
                     && ContextCompat.checkSelfPermission(this@BreathalyzerAvatar,
@@ -154,7 +153,6 @@ class BreathalyzerAvatar : AppCompatActivity() {
                         .into(avatarImage)
             }
         }
-
     }
 
     inner class APIKeyVerificationAlert : AsyncTask<String, Void, String>() {
@@ -229,10 +227,8 @@ class BreathalyzerAvatar : AppCompatActivity() {
         }
 
         override fun BACtrackResults(measuredBac: Float) {
-            //setStatus(getString(R.string.TEXT_FINISHED) + " " + measuredBac);
-            setStatus("Calculated BAC: " + measuredBac)
+            setStatus(getString(R.string.TEXT_FINISHED) + measuredBac)
             showImage(measuredBac.toDouble())
-
         }
 
 
