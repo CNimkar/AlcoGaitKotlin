@@ -1,3 +1,25 @@
 <resources>
     <string name="app_name">AlcoGaitK</string>
+    <string name="TEXT_DISCONNECTED">Disconnected</string>
+    <string name="TEXT_CONNECTING">Connecting...</string>
+    <string name="TEXT_DISCOVERING_SERVICES">Discovering services...</string>
+    <string name="TEXT_CONNECTED">Connected!</string>
+
+    <string name="TEXT_FIRMWARE_VERSION">"Firmware version: </string>
+    <string name="TEXT_SERIAL_NUMBER">Serial number: </string>
+    <string name="TEXT_USE_COUNT">Use count: </string>
+    <string name="TEXT_BATTERY_VOLTAGE">Battery voltage: </string>
+    <string name="TEXT_BATTERY_LEVEL">Battery level: </string>
+
+    <string name="TEXT_COUNTDOWN">Countdown: </string>
+    <string name="TEXT_BLOW_NOW">Blow now!</string>
+    <string name="TEXT_KEEP_BLOWING">Keep blowing...</string>
+    <string name="TEXT_ANALYZING">Analyzing...</string>
+    <string name="TEXT_FINISHED">"Calculated BAC: " </string>
+
+    <string name="TEXT_ERR_NO_BREATHALYZERS_FOUND">Error: No breathalyzers found.</string>
+    <string name="TEXT_ERR_BT_NOT_ENABLED">Error: Bluetooth is not enabled.</string>
+    <string name="TEXT_ERR_BLE_NOT_SUPPORTED">Error: BLE is not supported on this device.</string>
+    <string name="TEXT_ERR_BLOW_ERROR">Error: Do not stop blowing !</string>
+    <string name="TEXT_ERR_LOCATIONS_NOT_ENABLED">Error: Location services are not enabled.</string>
 </resources>
