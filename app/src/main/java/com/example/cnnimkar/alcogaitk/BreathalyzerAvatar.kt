@@ -30,6 +30,7 @@ class BreathalyzerAvatar : AppCompatActivity() {
     val PERMISSIONS_FOR_SCAN: Byte = 100
     val TAG = "BACTrackDemo"
     val apiKey = "37a05ec73c4544328aee3cbd0d8a97";
+    var currentXP = 10
     lateinit var mAPI: BACtrackAPI
     lateinit var mCallbacks: BACtrackAPICallbacks
     var mContext = this
@@ -37,6 +38,8 @@ class BreathalyzerAvatar : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.avatar_screen)
+
+        xps.text = currentXP.toString()
 
         mCallbacks = BACtrackAPICallback()
 
@@ -118,39 +121,41 @@ class BreathalyzerAvatar : AppCompatActivity() {
     }
 
     fun showImage(alcoholInput: Double) {
+        var image_to_load = 0
+
         runOnUiThread {
             when {
 
-                alcoholInput in SOBER -> GlideApp
-                        .with(this)
-                        .load(R.drawable.sober)
-                        .centerCrop()
-                        .into(avatarImage)
+                alcoholInput in SOBER -> {
+                    image_to_load = R.drawable.sober
+                    currentXP += 100
+                }
 
+                alcoholInput in TIPSY -> {
+                        image_to_load = R.drawable.tipsy
+                        currentXP += 50
+                }
 
-                alcoholInput in TIPSY -> GlideApp
-                        .with(this)
-                        .load(R.drawable.tipsy)
-                        .centerCrop()
-                        .into(avatarImage)
+                alcoholInput in DRUNK -> {
+                    image_to_load = R.drawable.drunk
+                    currentXP += 20
+                }
 
-                alcoholInput in DRUNK -> GlideApp
-                        .with(this)
-                        .load(R.drawable.drunk)
-                        .centerCrop()
-                        .into(avatarImage)
+                alcoholInput in WASTED -> {
+                    image_to_load = R.drawable.wasted
+                    currentXP += 10
+                }
 
-                alcoholInput in WASTED -> GlideApp
-                        .with(this)
-                        .load(R.drawable.wasted)
-                        .centerCrop()
-                        .into(avatarImage)
-                else -> GlideApp
-                        .with(this)
-                        .load(R.drawable.ic_launcher_background)
-                        .centerCrop()
-                        .into(avatarImage)
+                else ->
+                    image_to_load = R.drawable.ic_launcher_background
             }
+
+            xps.text = currentXP.toString()
+            GlideApp
+                    .with(this)
+                    .load(image_to_load)
+                    .centerCrop()
+                    .into(avatarImage)
         }
     }
 

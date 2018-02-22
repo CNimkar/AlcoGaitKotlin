@@ -41,12 +41,34 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="XP:"
+            android:layout_gravity="center"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/xps"
+            android:layout_gravity="center"
+            />
+
+    </LinearLayout>
+
+
     <ImageView
         android:id="@+id/avatarImage"
         android:layout_height="match_parent"
         android:layout_width="match_parent"
         android:src="@drawable/ic_launcher_background"
         />
+
 
 
 
