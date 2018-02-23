@@ -27,10 +27,16 @@ class BreathalyzerAvatar : AppCompatActivity() {
     val DRUNK = 0.07..0.125
     val WASTED = 0.13..0.25
 
+    val SOBER_XP = 100;
+    val TIPSY_XP = 50;
+    val DRUNK_XP = -20;
+    val WASTED_XP = -30;
+
     val PERMISSIONS_FOR_SCAN: Byte = 100
     val TAG = "BACTrackDemo"
     val apiKey = "37a05ec73c4544328aee3cbd0d8a97";
     var currentXP = 10
+    var earnedXP = 0
     lateinit var mAPI: BACtrackAPI
     lateinit var mCallbacks: BACtrackAPICallbacks
     var mContext = this
@@ -52,7 +58,10 @@ class BreathalyzerAvatar : AppCompatActivity() {
                 .centerCrop()
                 .into(avatarImage)
 
-
+        currXP.text = "XP : "+currentXP
+        delete.setOnClickListener {
+            report.visibility =  View.GONE
+        }
 
         try {
             mAPI = BACtrackAPI(this, mCallbacks, apiKey)
@@ -127,9 +136,9 @@ class BreathalyzerAvatar : AppCompatActivity() {
         }
     }
 
-    fun showResult(message: String){
+    fun showResult(message: Float){
         runOnUiThread {
-            bac.text = message
+            bac.text = message.toString()
             report.visibility = View.VISIBLE
         }
     }
@@ -146,29 +155,32 @@ class BreathalyzerAvatar : AppCompatActivity() {
 
                 alcoholInput in SOBER -> {
                     image_to_load = R.drawable.sober
-                    currentXP += 100
+                    earnedXP = SOBER_XP
                 }
 
                 alcoholInput in TIPSY -> {
-                        image_to_load = R.drawable.tipsy
-                        currentXP += 50
+                    image_to_load = R.drawable.tipsy
+                    earnedXP = TIPSY_XP
                 }
 
                 alcoholInput in DRUNK -> {
                     image_to_load = R.drawable.drunk
-                    currentXP += 20
+                    earnedXP = DRUNK_XP
                 }
 
                 alcoholInput in WASTED -> {
                     image_to_load = R.drawable.wasted
-                    currentXP += 10
+                    earnedXP = WASTED_XP
                 }
 
                 else ->
                     image_to_load = R.drawable.ic_launcher_background
             }
 
-            xps.text = currentXP.toString()
+            currentXP += earnedXP
+            currXP.text = "XP : "+currentXP
+            xpBar.progress = currentXP
+            xps.text = "+ "+earnedXP
             GlideApp
                     .with(this)
                     .load(image_to_load)
@@ -250,7 +262,7 @@ class BreathalyzerAvatar : AppCompatActivity() {
 
         override fun BACtrackResults(measuredBac: Float) {
             setStatus("Completed.")
-            showResult(getString(R.string.TEXT_FINISHED) + measuredBac)
+            showResult(measuredBac)
             showImage(measuredBac.toDouble())
         }
 
