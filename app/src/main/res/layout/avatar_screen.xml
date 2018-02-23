@@ -4,6 +4,26 @@
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="2dp"
+        >
+
+        <ImageView
+            android:id="@+id/avatarImage"
+            android:layout_height="510dp"
+            android:layout_width="288dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_launcher_background"
+            />
+
+
+    </android.support.design.widget.AppBarLayout>
+
+
+
     <TextView
         android:id="@+id/statusMessage"
         android:layout_width="match_parent"
@@ -41,6 +61,20 @@
 
     </LinearLayout>
 
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:id="@+id/report"
+        android:layout_marginTop="20dp"
+        >
+
+    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -49,25 +83,52 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="XP:"
+            android:text="XP Earned:"
             android:layout_gravity="center"
+            android:textSize="15sp"
+            android:layout_marginLeft="25dp"
             />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/xps"
             android:layout_gravity="center"
+            android:textSize="15sp"
+            android:textColor="#ff0000"
+            android:layout_marginLeft="25dp"
             />
 
     </LinearLayout>
+        <LinearLayout
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="BAC:"
+                android:layout_gravity="center"
+                android:textSize="15sp"
+                android:layout_marginLeft="25dp"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/bac"
+                android:layout_gravity="center"
+                android:textSize="15sp"
+                android:textColor="#ff0000"
+                android:layout_marginLeft="25dp"
+                />
+
+        </LinearLayout>
+    </LinearLayout>
+    </android.support.v7.widget.CardView>
 
 
-    <ImageView
-        android:id="@+id/avatarImage"
-        android:layout_height="match_parent"
-        android:layout_width="match_parent"
-        android:src="@drawable/ic_launcher_background"
-        />
 
 
 

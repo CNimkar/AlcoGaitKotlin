@@ -43,6 +43,17 @@ class BreathalyzerAvatar : AppCompatActivity() {
 
         mCallbacks = BACtrackAPICallback()
 
+        supportActionBar!!.hide()
+
+        //test
+        GlideApp
+                .with(this)
+                .load(R.drawable.sober)
+                .centerCrop()
+                .into(avatarImage)
+
+
+
         try {
             mAPI = BACtrackAPI(this, mCallbacks, apiKey)
         } catch (e: BluetoothLENotSupportedException) {
@@ -113,6 +124,13 @@ class BreathalyzerAvatar : AppCompatActivity() {
         runOnUiThread {
             Log.d(TAG, message)
             statusMessage.text = message
+        }
+    }
+
+    fun showResult(message: String){
+        runOnUiThread {
+            bac.text = message
+            report.visibility = View.VISIBLE
         }
     }
 
@@ -231,7 +249,8 @@ class BreathalyzerAvatar : AppCompatActivity() {
         }
 
         override fun BACtrackResults(measuredBac: Float) {
-            setStatus(getString(R.string.TEXT_FINISHED) + measuredBac)
+            setStatus("Completed.")
+            showResult(getString(R.string.TEXT_FINISHED) + measuredBac)
             showImage(measuredBac.toDouble())
         }
 
