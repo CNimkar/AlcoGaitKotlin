@@ -22,10 +22,10 @@ import kotlinx.android.synthetic.main.avatar_screen.*
 
 class BreathalyzerAvatar : AppCompatActivity() {
     
-    val SOBER = 0.00..0.01
-    val TIPSY = 0.02..0.06
-    val DRUNK = 0.07..0.125
-    val WASTED = 0.13..0.25
+    val SOBER = 0.00f..0.01f
+    val TIPSY = 0.02f..0.06f
+    val DRUNK = 0.07f..0.125f
+    val WASTED = 0.13f..0.25f
 
     val SOBER_XP = 100;
     val TIPSY_XP = 50;
