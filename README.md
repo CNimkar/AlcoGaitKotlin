@@ -7,7 +7,7 @@ The annotation processor (kapt) processes @GlideModule annotation on GlideAppGen
 
 Breathalyzer.kt uses GlideApp instance.
 Important 'val's:
-1. SOBER, TIPSY, DRUNK, WASTED are four Double ranges.
+1. SOBER, TIPSY, DRUNK, WASTED are four Float ranges.
 2. apiKey is generated for you by BACTrack, on registration.
 
 Important 'var's:
