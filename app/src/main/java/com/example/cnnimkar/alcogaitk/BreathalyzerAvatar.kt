@@ -10,18 +10,38 @@ import BACtrackAPI.Mobile.Constants.Errors
 import android.Manifest
 import android.app.AlertDialog
 import android.bluetooth.BluetoothDevice
+import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
+import android.hardware.Sensor
+import android.hardware.SensorEvent
+import android.hardware.SensorEventListener
+import android.hardware.SensorManager
 import android.os.AsyncTask
+import android.os.Build
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.annotation.RequiresApi
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
 import android.util.Log
 import android.view.View
+import android.view.ViewGroup
+import android.widget.LinearLayout
+import android.widget.Toast
+import com.uber.sdk.android.core.UberSdk
+import com.uber.sdk.android.rides.RideParameters
+import com.uber.sdk.android.rides.RideRequestButton
+import com.uber.sdk.android.rides.RideRequestButtonCallback
+import com.uber.sdk.rides.client.ServerTokenSession
+import com.uber.sdk.rides.client.SessionConfiguration
+import com.uber.sdk.rides.client.error.ApiError
 import kotlinx.android.synthetic.main.avatar_screen.*
 
+
 class BreathalyzerAvatar : AppCompatActivity() {
-    
+
+
     val SOBER = 0.00f..0.01f
     val TIPSY = 0.02f..0.06f
     val DRUNK = 0.07f..0.125f
@@ -34,13 +54,22 @@ class BreathalyzerAvatar : AppCompatActivity() {
 
     val PERMISSIONS_FOR_SCAN: Byte = 100
     val TAG = "BACTrackDemo"
-    val apiKey = "37a05ec73c4544328aee3cbd0d8a97";
+    val apiKey = "37a05ec73c4544328aee3cbd0d8a97"
     var currentXP = 10
     var earnedXP = 0
     lateinit var mAPI: BACtrackAPI
     lateinit var mCallbacks: BACtrackAPICallbacks
     var mContext = this
 
+    //Uber stuff
+    val CLIENT_ID = "1lMZjexIabeZ3aPskuwnU4yCAcn94kI9"
+    val SERVER_TOKEN = "DI_c-avelqyOmBhtjwXFhddccerBCuEHszuUTUHR"
+    val REDIRECT_URI = "https://nimkar.io"
+    val ACESS_TOKEN = "KA.eyJ2ZXJzaW9uIjoyLCJpZCI6Imw5SXozbzFpVEpDanBaWEtVQS9vNkE9PSIsImV4cGlyZXNfYXQiOjE1MjY4MDMwODcsInBpcGVsaW5lX2tleV9pZCI6Ik1RPT0iLCJwaXBlbGluZV9pZCI6MX0.s2xZKwANigKGIWTaCfI-R0vXIp98KeWOTELyVmOm0wY"
+
+    lateinit var requestButton : RideRequestButton
+
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.avatar_screen)
@@ -77,6 +106,7 @@ class BreathalyzerAvatar : AppCompatActivity() {
         }
 
         connectToNearest.setOnClickListener({
+            requestButton.loadRideInformation()
             connectNearestClicked()
         })
 
@@ -87,6 +117,81 @@ class BreathalyzerAvatar : AppCompatActivity() {
         blow.setOnClickListener({
             startBlowProcessClicked()
         })
+
+        val numbers: IntArray = intArrayOf(R.drawable.sober, R.drawable.tipsy, R.drawable.drunk, R.drawable.wasted)
+        var click = 0
+
+        demo.setOnClickListener({
+
+            if(click == 4) {click = 0;}
+
+            GlideApp
+                    .with(this)
+                    .load(numbers[click])
+                    .centerCrop()
+                    .into(avatarImage)
+
+            click++
+        })
+
+
+
+       // startService(intentFor<BreathalyzerAvatar>().newTask())
+       startForegroundService(Intent(this, GaitService::class.java))
+
+         var  builder : SessionConfiguration.Builder =  SessionConfiguration.Builder()
+
+         // mandatory
+      var config : SessionConfiguration =  builder.setClientId(CLIENT_ID)
+    // required for enhanced button features
+    .setServerToken(SERVER_TOKEN)
+    // required for implicit grant authentication
+    .setRedirectUri(REDIRECT_URI)
+    // optional: set sandbox as operating environment
+    .setEnvironment(SessionConfiguration.Environment.SANDBOX)
+    .build();
+
+        UberSdk.initialize(config);
+
+        requestButton = RideRequestButton(this);
+
+        var rideParameters : RideParameters  = RideParameters.Builder()
+                .setProductId("a1111c8c-c720-46c3-8534-2fcdd730040d")
+                .setDropoffLocation(42.279576, -71.8070876, "Home", "189 Grove St, Worcester, MA")
+                .setPickupLocation(42.2750591, -71.8087017, "Work", "Fuller Labs WPI, Worcester, MA")
+                .build()
+
+
+
+
+
+         var session  = ServerTokenSession(config);
+
+        var rideCallback =  (object : RideRequestButtonCallback {
+
+    override fun onRideInformationLoaded() {
+
+    }
+
+    override fun onError(apiError : ApiError) {
+
+    }
+
+   override fun onError(throwable : Throwable ) {
+
+    }
+})
+        requestButton.setRideParameters(rideParameters)
+        requestButton.setSession(session)
+        requestButton.setCallback(rideCallback)
+        requestButton.loadRideInformation()
+
+        //targetLinear.addView(requestButton)
+     //   requestButton.layoutParams.height = 250;
+     //   requestButton.layoutParams.width = 550;
+
+        requestButton.loadRideInformation()
+
 
     }
 
@@ -106,6 +211,7 @@ class BreathalyzerAvatar : AppCompatActivity() {
                 /**
                  * Permission already granted, start scan.
                  */
+
                 mAPI.connectToNearestBreathalyzer()
             }
         }
@@ -123,7 +229,7 @@ class BreathalyzerAvatar : AppCompatActivity() {
             result = mAPI.startCountdown()
         }
         if (!result)
-            Log.e(TAG, "mAPI.startCountdown() failed")
+                                                      
         else
             Log.d(TAG, "Blow process start requested")
     }
@@ -177,6 +283,10 @@ class BreathalyzerAvatar : AppCompatActivity() {
                     image_to_load = R.drawable.ic_launcher_background
             }
 
+            blow.visibility = View.GONE
+            disconnect.visibility = View.GONE
+
+
             currentXP += earnedXP
             currXP.text = "XP : "+currentXP
             xpBar.progress = currentXP
@@ -186,6 +296,14 @@ class BreathalyzerAvatar : AppCompatActivity() {
                     .load(image_to_load)
                     .centerCrop()
                     .into(avatarImage)
+
+            statusMessage.visibility = View.GONE
+            demo.visibility = View.GONE
+
+
+            targetLinear.addView(requestButton)
+            requestButton.layoutParams.height = 230;
+            requestButton.layoutParams.width = 550;
         }
     }
 
@@ -223,6 +341,7 @@ class BreathalyzerAvatar : AppCompatActivity() {
                 connectToNearest.visibility = View.GONE
                 disconnect.visibility = View.VISIBLE
                 blow.visibility = View.VISIBLE
+                demo.visibility = View.VISIBLE
             }
             setStatus(R.string.TEXT_CONNECTED)
         }
@@ -236,6 +355,7 @@ class BreathalyzerAvatar : AppCompatActivity() {
                 connectToNearest.visibility = View.VISIBLE
                 disconnect.visibility = View.GONE
                 blow.visibility = View.GONE
+                demo.visibility = View.GONE
             }
             setStatus(R.string.TEXT_DISCONNECTED)
         }
