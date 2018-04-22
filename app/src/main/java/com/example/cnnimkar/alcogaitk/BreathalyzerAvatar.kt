@@ -67,7 +67,7 @@ class BreathalyzerAvatar : AppCompatActivity() {
     val REDIRECT_URI = "https://nimkar.io"
     val ACESS_TOKEN = "KA.eyJ2ZXJzaW9uIjoyLCJpZCI6Imw5SXozbzFpVEpDanBaWEtVQS9vNkE9PSIsImV4cGlyZXNfYXQiOjE1MjY4MDMwODcsInBpcGVsaW5lX2tleV9pZCI6Ik1RPT0iLCJwaXBlbGluZV9pZCI6MX0.s2xZKwANigKGIWTaCfI-R0vXIp98KeWOTELyVmOm0wY"
 
-    lateinit var requestButton : RideRequestButton
+    lateinit var requestButton: RideRequestButton
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -87,9 +87,9 @@ class BreathalyzerAvatar : AppCompatActivity() {
                 .centerCrop()
                 .into(avatarImage)
 
-        currXP.text = "XP : "+currentXP
+        currXP.text = "XP : " + currentXP
         delete.setOnClickListener {
-            report.visibility =  View.GONE
+            report.visibility = View.GONE
         }
 
         try {
@@ -123,7 +123,9 @@ class BreathalyzerAvatar : AppCompatActivity() {
 
         demo.setOnClickListener({
 
-            if(click == 4) {click = 0;}
+            if (click == 4) {
+                click = 0;
+            }
 
             GlideApp
                     .with(this)
@@ -136,54 +138,36 @@ class BreathalyzerAvatar : AppCompatActivity() {
 
 
         startForegroundService(Intent(this, GaitService::class.java))
-
-        var  builder : SessionConfiguration.Builder =  SessionConfiguration.Builder()
-
-        var config : SessionConfiguration =  builder.setClientId(CLIENT_ID)
-                                            // required for enhanced button features
-                                                .setServerToken(SERVER_TOKEN)
-                                            // required for implicit grant authentication
-                                                .setRedirectUri(REDIRECT_URI)
-                                            // optional: set sandbox as operating environment
-                                                .setEnvironment(SessionConfiguration.Environment.SANDBOX)
-                                                .build();
+        var builder: SessionConfiguration.Builder = SessionConfiguration.Builder()
+        var config: SessionConfiguration = builder.setClientId(CLIENT_ID)
+                // required for enhanced button features
+                .setServerToken(SERVER_TOKEN)
+                // required for implicit grant authentication
+                .setRedirectUri(REDIRECT_URI)
+                // optional: set sandbox as operating environment
+                .setEnvironment(SessionConfiguration.Environment.SANDBOX)
+                .build();
 
         UberSdk.initialize(config);
-
         requestButton = RideRequestButton(this);
 
-        var rideParameters : RideParameters  = RideParameters.Builder()
+        var rideParameters: RideParameters = RideParameters.Builder()
                 .setProductId("a1111c8c-c720-46c3-8534-2fcdd730040d")
                 .setDropoffLocation(42.279576, -71.8070876, "Home", "189 Grove St, Worcester, MA")
                 .setPickupLocation(42.2750591, -71.8087017, "Work", "Fuller Labs WPI, Worcester, MA")
                 .build()
-
-        var session  = ServerTokenSession(config);
-
-        var rideCallback =  (object : RideRequestButtonCallback {
-
-    override fun onRideInformationLoaded() {
-
-    }
-
-    override fun onError(apiError : ApiError) {
-
-    }
-
-   override fun onError(throwable : Throwable ) {
-
-    }
-})
+        var session = ServerTokenSession(config);
+        var rideCallback = (object : RideRequestButtonCallback {
+            override fun onRideInformationLoaded() {}
+            override fun onError(apiError: ApiError) {}
+            override fun onError(throwable: Throwable) {}
+        })
         requestButton.setRideParameters(rideParameters)
         requestButton.setSession(session)
         requestButton.setCallback(rideCallback)
         requestButton.loadRideInformation()
-
-
-
         requestButton.loadRideInformation()
-
-      //  testEverything()
+        //  testEverything()
 
 
     }
@@ -222,7 +206,6 @@ class BreathalyzerAvatar : AppCompatActivity() {
             result = mAPI.startCountdown()
         }
         if (!result)
-                                                      
         else
             Log.d(TAG, "Blow process start requested")
     }
@@ -235,21 +218,21 @@ class BreathalyzerAvatar : AppCompatActivity() {
         }
     }
 
-    fun showResult(message: Float){
+    fun showResult(message: Float) {
         runOnUiThread {
             bac.text = message.toString()
             report.visibility = View.VISIBLE
         }
     }
 
-    fun testEverything(){
+    fun testEverything() {
         connectToNearest.visibility = View.GONE
         setStatus("Completed")
         testImage(0.04)
         testResult(0.04f)
     }
 
-    fun testResult(message: Float){
+    fun testResult(message: Float) {
         runOnUiThread {
             bac.text = message.toString()
             report.visibility = View.VISIBLE
@@ -295,9 +278,9 @@ class BreathalyzerAvatar : AppCompatActivity() {
 
 
             currentXP += earnedXP
-            currXP.text = "XP : "+currentXP
+            currXP.text = "XP : " + currentXP
             xpBar.progress = currentXP
-            xps.text = "+ "+earnedXP
+            xps.text = "+ " + earnedXP
             GlideApp
                     .with(this)
                     .load(image_to_load)
@@ -349,9 +332,9 @@ class BreathalyzerAvatar : AppCompatActivity() {
 
 
             currentXP += earnedXP
-            currXP.text = "XP : "+currentXP
+            currXP.text = "XP : " + currentXP
             xpBar.progress = currentXP
-            xps.text = "+ "+earnedXP
+            xps.text = "+ " + earnedXP
             GlideApp
                     .with(this)
                     .load(image_to_load)
@@ -456,6 +439,7 @@ class BreathalyzerAvatar : AppCompatActivity() {
 
         //NOT IMPLEMENTED
         override fun BACtrackAPIKeyAuthorized() {}
+
         override fun BACtrackConnectionTimeout() {}
         override fun BACtrackSerial(p0: String?) {}
         override fun BACtrackFirmwareVersion(p0: String?) {}

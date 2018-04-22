@@ -24,8 +24,8 @@ import android.widget.Toast
 class GaitService : Service(), SensorEventListener {
 
 
-    lateinit var sensorManager : SensorManager
-     var showNotification = false
+    lateinit var sensorManager: SensorManager
+    var showNotification = false
 
 
     override fun onAccuracyChanged(p0: Sensor?, p1: Int) {
@@ -34,22 +34,22 @@ class GaitService : Service(), SensorEventListener {
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onSensorChanged(event: SensorEvent?) {
-        if(event?.values!![0] > 6 || event?.values!![0] < -6){
-            Toast.makeText(this,"Abnormal Gait Detected",Toast.LENGTH_SHORT).show()
+        if (event?.values!![0] > 6 || event?.values!![0] < -6) {
+            Toast.makeText(this, "Abnormal Gait Detected", Toast.LENGTH_SHORT).show()
             showNotification = true
-            var gaitChannel : NotificationChannel = NotificationChannel("com.example.cnnimkar.alcogaitk","GaitChannel",NotificationManager.IMPORTANCE_DEFAULT)
+            var gaitChannel: NotificationChannel = NotificationChannel("com.example.cnnimkar.alcogaitk", "GaitChannel", NotificationManager.IMPORTANCE_DEFAULT)
             gaitChannel.enableLights(true)
             gaitChannel.enableVibration(true)
             gaitChannel.lightColor = Color.GREEN
 
-             var mManager : NotificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            var mManager: NotificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             mManager.createNotificationChannel(gaitChannel)
 
-            var intent : Intent = Intent(this, BreathalyzerAvatar::class.java)
+            var intent: Intent = Intent(this, BreathalyzerAvatar::class.java)
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
             val pendingIntent = PendingIntent.getActivity(this, 0, intent, 0)
 
-            var builder : Notification.Builder = Notification.Builder(getApplicationContext(), "com.example.cnnimkar.alcogaitk")
+            var builder: Notification.Builder = Notification.Builder(getApplicationContext(), "com.example.cnnimkar.alcogaitk")
                     .setContentTitle("Take Test")
                     .setContentText("You appear to be drunk")
                     .setSmallIcon(R.drawable.navigation_empty_icon)
@@ -64,10 +64,8 @@ class GaitService : Service(), SensorEventListener {
     }
 
 
-
-
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        Toast.makeText(this,"Service Started",Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, "Service Started", Toast.LENGTH_SHORT).show()
         sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
         sensorManager.registerListener(this,
                 sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
@@ -80,7 +78,7 @@ class GaitService : Service(), SensorEventListener {
 
     override fun onCreate() {
         sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
-        var notification : Notification = NotificationCompat.Builder(this, "chan")
+        var notification: Notification = NotificationCompat.Builder(this, "chan")
                 .setContentTitle("")
                 .setContentText("").build()
         startForeground(1, notification)
