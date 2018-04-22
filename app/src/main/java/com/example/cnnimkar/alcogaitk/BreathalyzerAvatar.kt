@@ -135,21 +135,18 @@ class BreathalyzerAvatar : AppCompatActivity() {
         })
 
 
+        startForegroundService(Intent(this, GaitService::class.java))
 
-       // startService(intentFor<BreathalyzerAvatar>().newTask())
-       startForegroundService(Intent(this, GaitService::class.java))
+        var  builder : SessionConfiguration.Builder =  SessionConfiguration.Builder()
 
-         var  builder : SessionConfiguration.Builder =  SessionConfiguration.Builder()
-
-         // mandatory
-      var config : SessionConfiguration =  builder.setClientId(CLIENT_ID)
-    // required for enhanced button features
-    .setServerToken(SERVER_TOKEN)
-    // required for implicit grant authentication
-    .setRedirectUri(REDIRECT_URI)
-    // optional: set sandbox as operating environment
-    .setEnvironment(SessionConfiguration.Environment.SANDBOX)
-    .build();
+        var config : SessionConfiguration =  builder.setClientId(CLIENT_ID)
+                                            // required for enhanced button features
+                                                .setServerToken(SERVER_TOKEN)
+                                            // required for implicit grant authentication
+                                                .setRedirectUri(REDIRECT_URI)
+                                            // optional: set sandbox as operating environment
+                                                .setEnvironment(SessionConfiguration.Environment.SANDBOX)
+                                                .build();
 
         UberSdk.initialize(config);
 
@@ -161,11 +158,7 @@ class BreathalyzerAvatar : AppCompatActivity() {
                 .setPickupLocation(42.2750591, -71.8087017, "Work", "Fuller Labs WPI, Worcester, MA")
                 .build()
 
-
-
-
-
-         var session  = ServerTokenSession(config);
+        var session  = ServerTokenSession(config);
 
         var rideCallback =  (object : RideRequestButtonCallback {
 
@@ -186,11 +179,11 @@ class BreathalyzerAvatar : AppCompatActivity() {
         requestButton.setCallback(rideCallback)
         requestButton.loadRideInformation()
 
-        //targetLinear.addView(requestButton)
-     //   requestButton.layoutParams.height = 250;
-     //   requestButton.layoutParams.width = 550;
+
 
         requestButton.loadRideInformation()
+
+      //  testEverything()
 
 
     }
@@ -249,11 +242,79 @@ class BreathalyzerAvatar : AppCompatActivity() {
         }
     }
 
+    fun testEverything(){
+        connectToNearest.visibility = View.GONE
+        setStatus("Completed")
+        testImage(0.04)
+        testResult(0.04f)
+    }
+
+    fun testResult(message: Float){
+        runOnUiThread {
+            bac.text = message.toString()
+            report.visibility = View.VISIBLE
+        }
+    }
+
     private fun setStatus(resourceId: Int) {
         this.setStatus(this.resources.getString(resourceId))
     }
 
     fun showImage(alcoholInput: Double) {
+        var image_to_load = 0
+
+        runOnUiThread {
+            when {
+
+                alcoholInput in SOBER -> {
+                    image_to_load = R.drawable.sober
+                    earnedXP = SOBER_XP
+                }
+
+                alcoholInput in TIPSY -> {
+                    image_to_load = R.drawable.tipsy
+                    earnedXP = TIPSY_XP
+                }
+
+                alcoholInput in DRUNK -> {
+                    image_to_load = R.drawable.drunk
+                    earnedXP = DRUNK_XP
+                }
+
+                alcoholInput in WASTED -> {
+                    image_to_load = R.drawable.wasted
+                    earnedXP = WASTED_XP
+                }
+
+                else ->
+                    image_to_load = R.drawable.ic_launcher_background
+            }
+
+            blow.visibility = View.GONE
+            disconnect.visibility = View.GONE
+
+
+            currentXP += earnedXP
+            currXP.text = "XP : "+currentXP
+            xpBar.progress = currentXP
+            xps.text = "+ "+earnedXP
+            GlideApp
+                    .with(this)
+                    .load(image_to_load)
+                    .centerCrop()
+                    .into(avatarImage)
+
+            statusMessage.visibility = View.GONE
+            demo.visibility = View.GONE
+
+
+            targetLinear.addView(requestButton)
+            requestButton.layoutParams.height = 230;
+            requestButton.layoutParams.width = 550;
+        }
+    }
+
+    fun testImage(alcoholInput: Double) {
         var image_to_load = 0
 
         runOnUiThread {
