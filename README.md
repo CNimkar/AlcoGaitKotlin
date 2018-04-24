@@ -1,4 +1,13 @@
 # AlcoGaitKotlin
+
+<img src="https://user-images.githubusercontent.com/7290739/39168918-b1a9282e-4763-11e8-8c26-580ab4cbdf61.jpg" width="400" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="https://user-images.githubusercontent.com/7290739/39168919-b1b7cc30-4763-11e8-8e9d-245c398e6874.jpg" width="400" />
+
+## 1. Background service started &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  2. Abnormal gait detected 
+
+<img src="https://user-images.githubusercontent.com/7290739/39168920-b1c62e24-4763-11e8-9479-a11bdb8ac8cb.jpg" width="400" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="https://user-images.githubusercontent.com/7290739/39168921-b1d47de4-4763-11e8-9efb-83a2f303f898.jpg" width="400" />              
+
+## 3. Uber booking button is &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  4.Uber deeplink 
+
 BreathalyzerAvatar.kt contains code to show output gif for BAC input.
 We get a BAC input from a Bluetooth Breathalyzer.
 I use Glide library for gif support.
