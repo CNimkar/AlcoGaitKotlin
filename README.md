@@ -8,6 +8,7 @@
 
 ## 3. Uber booking button is &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  4.Uber deeplink 
 
+
 BreathalyzerAvatar.kt contains code to show output gif for BAC input.
 We get a BAC input from a Bluetooth Breathalyzer.
 I use Glide library for gif support.
@@ -44,3 +45,9 @@ Important 'var's:
   10. onSensorChanged in GaitService.kt looks for "abnormal gait. This service being a stub service,
   (Gait functionality usnig server with ML algorithm to be setup) it looks for x accelerometer value 
   greater than 6 or lower than -6.  That is "assumed" as an abnormal gait.
+  
+  ![mobile_iphone-white-bactrack-view](https://user-images.githubusercontent.com/7290739/39169981-cd09bd32-4767-11e8-8430-6dcf6ff29b09.jpg)
+
+## Breathalyzer Used: BACtrack (https://www.bactrack.com/)
+(*breathalyzer image was downloaded from the same website)
+
