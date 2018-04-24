@@ -54,7 +54,7 @@ class BreathalyzerAvatar : AppCompatActivity() {
 
     val PERMISSIONS_FOR_SCAN: Byte = 100
     val TAG = "BACTrackDemo"
-    val apiKey = "37a05ec73c4544328aee3cbd0d8a97"
+    val apiKey = "37bc0d8a97" //redacted for privacy purposes.
     var currentXP = 10
     var earnedXP = 0
     lateinit var mAPI: BACtrackAPI
@@ -118,26 +118,18 @@ class BreathalyzerAvatar : AppCompatActivity() {
             startBlowProcessClicked()
         })
 
-        val numbers: IntArray = intArrayOf(R.drawable.sober, R.drawable.tipsy, R.drawable.drunk, R.drawable.wasted)
-        var click = 0
-
-        demo.setOnClickListener({
-
-            if (click == 4) {
-                click = 0;
-            }
-
-            GlideApp
-                    .with(this)
-                    .load(numbers[click])
-                    .centerCrop()
-                    .into(avatarImage)
-
-            click++
-        })
-
-
+      
+        setupDemoImages()
         startForegroundService(Intent(this, GaitService::class.java))
+        setupUber()
+        
+
+        //  testEverything()
+
+
+    }
+    
+    fun setupUber(){
         var builder: SessionConfiguration.Builder = SessionConfiguration.Builder()
         var config: SessionConfiguration = builder.setClientId(CLIENT_ID)
                 // required for enhanced button features
@@ -167,9 +159,26 @@ class BreathalyzerAvatar : AppCompatActivity() {
         requestButton.setCallback(rideCallback)
         requestButton.loadRideInformation()
         requestButton.loadRideInformation()
-        //  testEverything()
+    }
+    
+    fun setupDemoImages(){
+      val numbers: IntArray = intArrayOf(R.drawable.sober, R.drawable.tipsy, R.drawable.drunk, R.drawable.wasted)
+        var click = 0
 
+        demo.setOnClickListener({
 
+            if (click == 4) {
+                click = 0;
+            }
+
+            GlideApp
+                    .with(this)
+                    .load(numbers[click])
+                    .centerCrop()
+                    .into(avatarImage)
+
+            click++
+        })
     }
 
     fun connectNearestClicked() {
