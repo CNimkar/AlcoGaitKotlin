@@ -62,10 +62,10 @@ class BreathalyzerAvatar : AppCompatActivity() {
     var mContext = this
 
     //Uber stuff
-    val CLIENT_ID = "1lMZjexIabeZ3aPskuwnU4yCAcn94kI9"
-    val SERVER_TOKEN = "DI_c-avelqyOmBhtjwXFhddccerBCuEHszuUTUHR"
+    val CLIENT_ID = "2MlKexIabeZ3aPbduwnU4yCAcn98CI9" //redacted for privacy reasons. You can generate one on Uber Developers Console.
+    val SERVER_TOKEN = "TY_b-kuekqyOmBhtjwXFhddccerDSueWazuUTUHR" // redacted.
     val REDIRECT_URI = "https://nimkar.io"
-    val ACESS_TOKEN = "KA.eyJ2ZXJzaW9uIjoyLCJpZCI6Imw5SXozbzFpVEpDanBaWEtVQS9vNkE9PSIsImV4cGlyZXNfYXQiOjE1MjY4MDMwODcsInBpcGVsaW5lX2tleV9pZCI6Ik1RPT0iLCJwaXBlbGluZV9pZCI6MX0.s2xZKwANigKGIWTaCfI-R0vXIp98KeWOTELyVmOm0wY"
+    val ACESS_TOKEN = "KA.eyB3BLyVmOm0wY" // redacted.
 
     lateinit var requestButton: RideRequestButton
 
@@ -152,8 +152,8 @@ class BreathalyzerAvatar : AppCompatActivity() {
         requestButton = RideRequestButton(this);
 
         var rideParameters: RideParameters = RideParameters.Builder()
-                .setProductId("a1111c8c-c720-46c3-8534-2fcdd730040d")
-                .setDropoffLocation(42.279576, -71.8070876, "Home", "189 Grove St, Worcester, MA")
+                .setProductId("a1111c8c-c720-46c3-8534-2fcdd730040d") //UberX
+                .setDropoffLocation(42.457876, -82.8890876, "Home", "189 Highland St, Worcester, MA") //redacted
                 .setPickupLocation(42.2750591, -71.8087017, "Work", "Fuller Labs WPI, Worcester, MA")
                 .build()
         var session = ServerTokenSession(config);
